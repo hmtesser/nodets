@@ -2,6 +2,7 @@ import { IGetUsersControllers, IGetUsersRepository } from "./protocols";
 
 export class GetUsersController implements IGetUsersControllers {
   constructor(private readonly getUserRepository: IGetUsersRepository) {}
+
   async handle() {
     try {
       const users = await this.getUserRepository.getUsers();
