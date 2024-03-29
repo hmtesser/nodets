@@ -6,18 +6,12 @@ import { MongoClient } from "./database/mongo";
 import { CreateUserController } from "./controllers/create-user/create-user";
 import { MongoCreateUser } from "./repositories/create-user/mongo-create-user";
 
-config();
-
-const app = express();
-
-const port = process.env.PORT || 8000;
-
-app.get("/", (req, res) => {
-  res.send("hello api!");
-});
-
 const main = async () => {
+  config();
+
   const app = express();
+
+  app.use(express.json());
 
   await MongoClient.connect();
 
@@ -44,6 +38,8 @@ const main = async () => {
 
     res.send(body).status(statusCode);
   });
+
+  const port = process.env.PORT || 8000;
 
   app.listen(port, () => console.log(`listening on port ${port}!`));
 };
