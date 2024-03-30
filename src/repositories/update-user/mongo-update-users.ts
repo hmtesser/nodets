@@ -8,8 +8,11 @@ import { User } from "../../models/user";
 
 export class MongoUpdateUserRepository implements iUpdateUserRepository {
   async updateUser(id: string, params: UpdateUserParams): Promise<User> {
+    console.log(params);
     await MongoClient.db.collection("users").updateOne(
-      { _id: new ObjectId() },
+      {
+        _id: new ObjectId(id),
+      },
       {
         $set: {
           ...params,
@@ -21,6 +24,7 @@ export class MongoUpdateUserRepository implements iUpdateUserRepository {
       .collection<Omit<User, "id">>("users")
       .findOne({ _id: new ObjectId(id) });
 
+    console.log(user);
     if (!user) {
       throw new Error();
     }
